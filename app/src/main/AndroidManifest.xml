@@ -14,12 +14,18 @@
         android:theme="@style/Theme.Lab_5_iot"
         tools:targetApi="31">
         <activity
+            android:name=".agregarEvento"
+            android:exported="false" />
+        <activity
             android:name=".ListarActividades"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".PruebaActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
