@@ -112,4 +112,60 @@ public class MainActivity extends AppCompatActivity {
         }
         
     }
+
+    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new FirebaseAuthUIActivityResultContract(), result -> {
+        onSignInOnResult(result);
+    });
+
+    private void onSignInOnResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse idpResponse = result.getIdpResponse();
+        if (result.getResultCode() == RESULT_OK) {
+            Log.d("msg-fb", idpResponse.getEmail());
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            Log.d("msg-fb", currentUser.getUid());
+
+            DatabaseReference ref = firebaseDatabase.getReference()
+                    .child("usuarios")
+                    .child(currentUser.getUid());
+
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (!snapshot.exists()) {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("nombre", currentUser.getDisplayName());
+                        map.put("provider", currentUser.getProviderId());
+                        map.put("dominio", currentUser.getEmail().split("@")[1]);
+                        map.put("rol", "alumno");
+
+                        ref.setValue(map).addOnCompleteListener(task -> {
+                            System.out.println("usuario creado exitosamente");
+                        });
+                    }
+                    if (currentUser.isEmailVerified()) {
+                        startActivity(new Intent(MainActivity.this, ListarActividades.class));
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, "debes validar tu correo", Toast.LENGTH_SHORT).show();
+                        currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d("msg-fb", "correo enviado");
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        } else {
+            Log.d("msg-fb", "error al loguearse");
+        }
+    }
+
+
 }
