@@ -13,4 +13,24 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="mdcTheme">
+        <item name="cornerSize">20dp</item>
+        <item name="cornerFamily">cut</item>
+    </style>
+
+    <style name="boton_rojo" parent="Theme.Material3.DayNight">
+    <!-- Primary brand color. -->
+        <item name="colorPrimary">#FF1F41</item>
+        <item name="colorPrimaryVariant">#240056</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="shapeAppearance">@style/mdcTheme</item>
+    </style>
+    <style name="boton_amarillo" parent="Theme.Material3.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FFC107</item>
+        <item name="colorPrimaryVariant">#240056</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="shapeAppearance">@style/mdcTheme</item>
+    </style>
 </resources>
