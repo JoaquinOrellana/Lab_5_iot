@@ -20,7 +20,7 @@ public class ListaActividadesAdapter extends RecyclerView.Adapter<ListaActividad
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("msg", "id: "+String.valueOf(actividad.getId()));
+                    //Log.d("msg", "id: "+String.valueOf(actividad.));
                 }
             });
         }
