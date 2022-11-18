@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "430106441493",
+    "project_id": "lab5-iot",
+    "storage_bucket": "lab5-iot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430106441493:android:b5afae1013ed4ce3179b1c",
+        "android_client_info": {
+          "package_name": "edu.pucp.lab_5_iot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430106441493-4srfn01bs735vmdnecfs0uv15o9r12fl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvSSHNwHcTEfTgbFCBcpQT63u3YKtgQBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430106441493-4srfn01bs735vmdnecfs0uv15o9r12fl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
