@@ -1,18 +1,11 @@
 package edu.pucp.lab_5_iot;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,7 +16,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -94,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (currentUser.isEmailVerified()) {
-                        startActivity(new Intent(MainActivity.this, ListarActividades.class));
+                        startActivity(new Intent(MainActivity.this, ListarEventos.class));
                         finish();
                     } else {
                         Toast.makeText(MainActivity.this, "debes validar tu correo", Toast.LENGTH_SHORT).show();
@@ -143,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                     if (currentUser.isEmailVerified()) {
-                        startActivity(new Intent(MainActivity.this, ListarActividades.class));
+                        startActivity(new Intent(MainActivity.this, ListarEventos.class));
                         finish();
                     } else {
                         Toast.makeText(MainActivity.this, "debes validar tu correo", Toast.LENGTH_SHORT).show();

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnEliminarActividad"
         android:layout_width="90dp"
         android:layout_height="37dp"
         android:layout_marginEnd="12dp"
@@ -58,16 +58,16 @@
         android:text="Editar"
         android:textSize="10sp"
         android:theme="@style/boton_amarillo"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEliminarActividad"
+        app:layout_constraintEnd_toStartOf="@+id/btnEliminarActividad"
+        app:layout_constraintTop_toTopOf="@+id/btnEliminarActividad"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="64dp"
         android:layout_height="15dp"
-        android:text="Hora inicio:"
+        android:text="Fecha fin:"
         android:textColor="#000000"
         android:textSize="12sp"
         android:textStyle="bold"
@@ -75,13 +75,15 @@
         tools:layout_editor_absoluteY="68dp" />
 
     <TextView
-        android:id="@+id/textViewFechaFin"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha fin:"
+        android:layout_marginBottom="16dp"
+        android:text="Descripción:"
         android:textColor="#000000"
         android:textSize="12sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -98,7 +100,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView9" />
 
     <TextView
-        android:id="@+id/textViewHoraInicio"
+        android:id="@+id/textViewFechaFin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -110,38 +112,15 @@
         app:layout_constraintTop_toTopOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/textViewEstadoEvento"
+        android:id="@+id/textViewDescripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:text="TextView"
         android:textColor="#000000"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFechaFin"
-        app:layout_constraintStart_toEndOf="@+id/textViewFechaFin"
-        app:layout_constraintTop_toTopOf="@+id/textViewFechaFin" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
-    <TextView
-        android:id="@+id/textViewHoraFin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Descripción:"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewFechaFin"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:text="TextView"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewHoraFin"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEstadoEvento" />
 </androidx.constraintlayout.widget.ConstraintLayout>

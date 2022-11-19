@@ -20,7 +20,7 @@
             android:name=".agregarEvento"
             android:exported="false" />
         <activity
-            android:name=".ListarActividades"
+            android:name=".ListarEventos"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
