@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.firebase.ui.auth.AuthMethodPickerLayout;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
@@ -17,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -32,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,86 +84,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            Log.d("msg-fb", currentUser.getUid());
-            Log.d("msg-fb", currentUser.getEmail());
-            currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (currentUser.isEmailVerified()) {
-                        startActivity(new Intent(MainActivity.this, ListarEventos.class));
-                        finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "debes validar tu correo", Toast.LENGTH_SHORT).show();
-                        currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Log.d("msg-fb", "correo enviado");
-                            }
-                        });
-                    }
-                }
-            });
-        } else {
-            Log.d("msg-fb", "error al loguearse");
-        }
-        
+
+
+
+
+
     }
 
-    private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new FirebaseAuthUIActivityResultContract(), result -> {
-        onSignInOnResult(result);
-    });
 
-    private void onSignInOnResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse idpResponse = result.getIdpResponse();
-        if (result.getResultCode() == RESULT_OK) {
-            Log.d("msg-fb", idpResponse.getEmail());
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            Log.d("msg-fb", currentUser.getUid());
-
-            DatabaseReference ref = firebaseDatabase.getReference()
-                    .child("usuarios")
-                    .child(currentUser.getUid());
-
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (!snapshot.exists()) {
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("nombre", currentUser.getDisplayName());
-                        map.put("provider", currentUser.getProviderId());
-                        map.put("dominio", currentUser.getEmail().split("@")[1]);
-                        map.put("rol", "alumno");
-
-                        ref.setValue(map).addOnCompleteListener(task -> {
-                            System.out.println("usuario creado exitosamente");
-                        });
-                    }
-                    if (currentUser.isEmailVerified()) {
-                        startActivity(new Intent(MainActivity.this, ListarEventos.class));
-                        finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "debes validar tu correo", Toast.LENGTH_SHORT).show();
-                        currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Log.d("msg-fb", "correo enviado");
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        } else {
-            Log.d("msg-fb", "error al loguearse");
-        }
-    }
 
 
 }

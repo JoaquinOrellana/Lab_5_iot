@@ -37,7 +37,7 @@ public class PruebaActivity extends AppCompatActivity {
             evento.setFechaYHora(LocalDateTime.now());
             evento.setImgID("xd");
 
-            ref.child(evento.getFechaYHora().get).setValue(evento)
+            ref.child(evento.getFechaYHora().toString()).setValue(evento)
                     .addOnSuccessListener(aVOid -> Log.d("msg", "Información Guardada Exitosamente"))
                     .addOnFailureListener(e -> Log.d("msg", e.getMessage()));
 
