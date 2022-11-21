@@ -212,4 +212,9 @@ public class ListarEventos extends AppCompatActivity {
             Log.d("msg-fb", "error al loguearse");
         }
     }
+
+    public void anadirEvento (View view){
+        startActivity(new Intent(ListarEventos.this, agregarEvento.class));
+    }
+
 }

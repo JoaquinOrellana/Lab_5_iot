@@ -34,12 +34,12 @@ public class PruebaActivity extends AppCompatActivity {
             EventoDTO evento = new EventoDTO();
             evento.setTitulo("xd");
             evento.setDescripcion("xd");
-            evento.setFechaYHora(LocalDateTime.now());
+        //    evento.setFechaYHora(LocalDateTime.now());
             evento.setImgID("xd");
 
-            ref.child(evento.getFechaYHora().toString()).setValue(evento)
-                    .addOnSuccessListener(aVOid -> Log.d("msg", "Información Guardada Exitosamente"))
-                    .addOnFailureListener(e -> Log.d("msg", e.getMessage()));
+         //   ref.child(evento.getFechaYHora().toString()).setValue(evento)
+        //           .addOnSuccessListener(aVOid -> Log.d("msg", "Información Guardada Exitosamente"))
+          //          .addOnFailureListener(e -> Log.d("msg", e.getMessage()));
 
         }
 
