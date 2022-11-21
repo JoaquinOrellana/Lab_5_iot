@@ -1,11 +1,14 @@
 package edu.pucp.lab_5_iot.DTO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class EventoDTO {
     String titulo;
     String descripcion;
-    LocalDateTime fechaYHora;
+    LocalDateTime fechaYHoraInicio;;
+    LocalDateTime fechaYHoraFin;
     String imgID;
 
     public String getTitulo() {
@@ -24,13 +27,13 @@ public class EventoDTO {
         this.descripcion = descripcion;
     }
 
-    public LocalDateTime getFechaYHora() {
-        return fechaYHora;
-    }
+    public LocalDateTime getFechaYHoraInicio() {return fechaYHoraInicio;}
 
-    public void setFechaYHora(LocalDateTime fechaYHora) {
-        this.fechaYHora = fechaYHora;
-    }
+    public void setFechaYHoraInicio(LocalDateTime fechaYHoraInicio) {this.fechaYHoraInicio = fechaYHoraInicio;}
+
+    public LocalDateTime getFechaYHoraFin() {return fechaYHoraFin;}
+
+    public void setFechaYHoraFin(LocalDateTime fechaYHoraFin) {this.fechaYHoraFin = fechaYHoraFin;}
 
     public String getImgID() {
         return imgID;

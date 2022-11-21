@@ -47,12 +47,12 @@ public class ListarEventos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_actividades);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
-        recyclerView=findViewById(R.id.recyclerViewEventos);
         //TODO PONER NOMBRE DE REFERENCIA Y CHILD
-        databaseReference= firebaseDatabase.getReference("").child("");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference= firebaseDatabase.getReference("eventos").child("");
+
         listaEventos=new ArrayList<>();
+        recyclerView=findViewById(R.id.recyclerViewEventos);
         recyclerView.setLayoutManager(new LinearLayoutManager(ListarEventos.this));
         adapter = new ListaEventosAdapter(this,listaEventos);
         recyclerView.setAdapter(adapter);
@@ -60,6 +60,7 @@ public class ListarEventos extends AppCompatActivity {
         Button btnLoginb=findViewById(R.id.btnLogin);
         Button button = findViewById(R.id.btnlogout);
         button.setVisibility(View.GONE);
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null){
             Log.d("msg-fb",currentUser.getUid());
@@ -73,7 +74,7 @@ public class ListarEventos extends AppCompatActivity {
                         btnLoginb.setVisibility(View.GONE);
                         button.setVisibility(View.VISIBLE);
                         TextView textview = findViewById(R.id.textViewUsuario);
-                        String str="Usuario:"+currentUser.getDisplayName();
+                        String str="Usuario: "+currentUser.getDisplayName();
                         textview.setText(str);
 
                         button.setOnClickListener(new View.OnClickListener() {

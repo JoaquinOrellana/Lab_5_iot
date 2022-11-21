@@ -28,6 +28,7 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
     public class ActividadViewHolder extends RecyclerView.ViewHolder{
         TextView titulo,descripcion,fechaYHoraInicio,fechaYHoraFin,imgID;
         Button btneditar, btnEliminar;
+
         public ActividadViewHolder(@NonNull View itemView) {
             super(itemView);
             btneditar = itemView.findViewById(R.id.btnEditarActividad);
@@ -35,11 +36,8 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
             titulo=itemView.findViewById(R.id.textviewTituloActividad);
             descripcion=itemView.findViewById(R.id.textViewDescripcion);
             fechaYHoraInicio=itemView.findViewById(R.id.textViewFechaInicio);
-            //TODO FALTA FECHA FIN EN DTO
             fechaYHoraFin=itemView.findViewById(R.id.textViewFechaFin);
             //TODO IMPLEMENTAR IMAGE ID
-
-
         }
     }
 
@@ -59,10 +57,9 @@ public class ListaEventosAdapter extends RecyclerView.Adapter<ListaEventosAdapte
         EventoDTO eventoDTO = list.get(position);
         holder.titulo.setText(eventoDTO.getTitulo());
         holder.descripcion.setText(eventoDTO.getDescripcion());
-        holder.fechaYHoraInicio.setText(eventoDTO.getFechaYHora().toString());
-        //holder.fechaYHoraFin.setText(eventoDTO.getFechaYHoraFin().toString());
+        holder.fechaYHoraInicio.setText(eventoDTO.getFechaYHoraInicio().toString());
+        holder.fechaYHoraFin.setText(eventoDTO.getFechaYHoraFin().toString());
         //TODO IMPLEMENTAR FOTO
-
     }
 
     @Override
