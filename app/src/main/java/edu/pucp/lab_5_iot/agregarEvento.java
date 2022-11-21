@@ -1,15 +1,25 @@
 package edu.pucp.lab_5_iot;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,12 +31,47 @@ import edu.pucp.lab_5_iot.DTO.EventoDTO;
 public class agregarEvento extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
+    FirebaseStorage storage;
+    StorageReference StorRef;
+    static int cont = 1;
+    ActivityResultLauncher<Intent> launcherPhotos = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Uri uri = result.getData().getData();
+                    StorageReference child = StorRef.child("photo" + (cont++) + ".jpg");
+
+                    child.putFile(uri)
+                            .addOnSuccessListener(taskSnapshot -> Log.d("msg-test", "Subido correctamente"))
+                            .addOnFailureListener(e -> Log.d("msg-test", "error"))
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Log.d("msg-test", "ruta archivo: " + task.getResult());
+                                }
+                            });
+                } else {
+                    Toast.makeText(agregarEvento.this, "Debe seleccionar un archivo", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorRef = storageReference.child("lab5photos");
+
+        StorageReference photoRef = StorRef.child("photo" + cont + ".jpg");
+        ImageView imageView = findViewById(R.id.imageView2);
+
+        Glide.with(this)
+                .load(photoRef)
+                .into(imageView);
     }
 
     public void guardarEvento(View view){
@@ -64,4 +109,14 @@ public class agregarEvento extends AppCompatActivity {
 
 
     }
+
+
+    public void subirImagen(View view) {
+
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("image/jpeg");
+        launcherPhotos.launch(intent);
+
+    }
+
 }
