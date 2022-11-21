@@ -6,6 +6,36 @@
     android:layout_height="match_parent"
     tools:onClick="guardarEvento">
 
+    <Button
+        android:id="@+id/btn_fechafin"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Añadir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn" />
+
+    <TextView
+        android:id="@+id/horafinText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/horainicioText" />
+
+    <TextView
+        android:id="@+id/horainicioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/finText" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputActividadLayout"
         android:layout_width="0dp"
@@ -48,95 +78,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fechainicioLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Fecha Inicio"
-        app:layout_constraintEnd_toEndOf="@+id/despcripcionLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/despcripcionLayout"
-        app:layout_constraintTop_toBottomOf="@+id/despcripcionLayout"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fechainicio"
-
-            android:inputType="date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fechafinLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Fecha Fin"
-        app:layout_constraintEnd_toEndOf="@+id/fechainicioLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/fechainicioLayout"
-        app:layout_constraintTop_toBottomOf="@+id/fechainicioLayout"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fechafin"
-            android:inputType="date"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/finLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Hora de inicio"
-        app:layout_constraintEnd_toEndOf="@+id/fechafinLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/fechafinLayout"
-        app:layout_constraintTop_toBottomOf="@+id/fechafinLayout"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/horaInicio"
-            android:inputType="time"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/horafinLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Hora de fin"
-        app:layout_constraintEnd_toEndOf="@+id/finLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/finLayout"
-        app:layout_constraintTop_toBottomOf="@+id/finLayout"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/horaFin"
-
-            android:layout_width="match_parent"
-            android:inputType="time"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -146,7 +87,7 @@
         android:layout_marginEnd="416dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horafinLayout"
+        app:layout_constraintTop_toBottomOf="@+id/despcripcionLayout"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
@@ -163,23 +104,24 @@
         android:id="@+id/imagen_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="44dp"
         android:onClick="subirImagen"
         android:text="Añadir imagen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horafinLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_horafin"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/crear_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="240dp"
         android:onClick="guardarEvento"
         android:text="Crear Evento"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/despcripcionLayout"
+        app:layout_constraintStart_toStartOf="@+id/despcripcionLayout"
+        app:layout_constraintTop_toBottomOf="@+id/btn_horafin" />
 
     <TextView
         android:id="@+id/textView7"
@@ -198,20 +140,121 @@
         android:id="@+id/constraintLayout"
         android:layout_width="153dp"
         android:layout_height="140dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="48dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.013"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horafinLayout">
+        tools:ignore="MissingConstraints,NotSibling"
+        tools:layout_editor_absoluteY="499dp">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="6dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+
+        android:text="Añadir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/despcripcionLayout" />
+
+    <TextView
+        android:id="@+id/fechacalendario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/despcripcionLayout" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Seleccione una fecha de inicio:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/despcripcionLayout" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Seleccione una fecha de fin:"
+
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/finText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/fechacalendario" />
+
+    <Button
+        android:id="@+id/btn_horaInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Añadir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_fechafin" />
+
+    <Button
+        android:id="@+id/btn_horafin"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Añadir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_horaInicio" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Seleccione una hora de inicio:"
+        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Seleccione una horade fin:"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
