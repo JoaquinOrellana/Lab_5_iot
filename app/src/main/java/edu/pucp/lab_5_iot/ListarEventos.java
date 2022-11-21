@@ -35,7 +35,7 @@ import java.util.HashMap;
 import edu.pucp.lab_5_iot.DTO.EventoDTO;
 
 public class ListarEventos extends AppCompatActivity {
-
+    private ValueEventListener valueEventListener;
     RecyclerView recyclerView;
     ArrayList<EventoDTO> listaEventos;
     DatabaseReference databaseReference;
@@ -56,6 +56,33 @@ public class ListarEventos extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(ListarEventos.this));
         adapter = new ListaEventosAdapter(this,listaEventos);
         recyclerView.setAdapter(adapter);
+        valueEventListener =databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    listaEventos.clear();
+                    for (DataSnapshot datasnap : snapshot.getChildren()) {
+                        EventoDTO eventoDTO = datasnap.getValue(EventoDTO.class);
+
+
+                        listaEventos.add(eventoDTO);
+
+                    }
+
+                    adapter.notifyDataSetChanged();
+                } else {
+
+                    listaEventos.clear();
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         Button btnLoginb=findViewById(R.id.btnLogin);
         Button button = findViewById(R.id.btnlogout);
@@ -134,6 +161,13 @@ public class ListarEventos extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        databaseReference.removeEventListener(valueEventListener);
+    }
+
 
     private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(), result -> {

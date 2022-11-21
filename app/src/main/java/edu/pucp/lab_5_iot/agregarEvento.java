@@ -33,13 +33,14 @@ public class agregarEvento extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage storage;
     StorageReference StorRef;
-    static int cont = 1;
+    //static int cont = 1;
+    int numero = (int)(Math.random()*11351+1);
     ActivityResultLauncher<Intent> launcherPhotos = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
                     Uri uri = result.getData().getData();
-                    StorageReference child = StorRef.child("photo" + (cont++) + ".jpg");
+                    StorageReference child = StorRef.child("photo" + numero + ".jpg");
 
                     child.putFile(uri)
                             .addOnSuccessListener(taskSnapshot -> Log.d("msg-test", "Subido correctamente"))
@@ -61,12 +62,12 @@ public class agregarEvento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance(); // se obtiene la conexion a la db
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorRef = storageReference.child("lab5photos");
 
-        StorageReference photoRef = StorRef.child("photo" + cont + ".jpg");
+        StorageReference photoRef = StorRef.child("photo" + numero + ".jpg");
         ImageView imageView = findViewById(R.id.imageView2);
 
         Glide.with(this)
@@ -75,7 +76,11 @@ public class agregarEvento extends AppCompatActivity {
     }
 
     public void guardarEvento(View view){
+        // 1. se obtiene la referencia a la db
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = firebaseDatabase.getReference();
+        DatabaseReference refeventos = ref.child("eventos");
+        // 2. se obtienen los datos
         EditText nombreActividad = findViewById(R.id.nombreActividad);
         EditText descripcion = findViewById(R.id.descripcion);
         EditText fechaInicio = findViewById(R.id.fechainicio);
@@ -100,9 +105,19 @@ public class agregarEvento extends AppCompatActivity {
             evento.setFechaYHoraInicio(fechaYhoraInicio);
             evento.setFechaYHoraFin(fechaYhoraFin);
             evento.setDescripcion(descripcion.getText().toString());
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            ref.child("eventos").child(currentUser.getUid()).child(fechaYhoraInicio.toString()).setValue(evento);
+            evento.setImgID("photo" + numero + ".jpg");
+            // 3. se guardan los datos
+            refeventos.push().setValue(evento).addOnSuccessListener(unused -> {
+                Toast.makeText(agregarEvento.this, "Guardado correctamente", Toast.LENGTH_SHORT).show();
+            });
 
+            // 4. se resetean los valores
+            nombreActividad.setText("");
+            descripcion.setText("");
+            fechaInicio.setText("");
+            fechaFin.setText("");
+            horaInicio.setText("");
+            horaFin.setText("");
 
         }
 
