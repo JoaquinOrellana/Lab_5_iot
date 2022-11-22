@@ -28,11 +28,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import edu.pucp.lab_5_iot.DTO.EventoDTO;
@@ -45,6 +48,8 @@ public class agregarEvento extends AppCompatActivity {
 
     EditText nombreActividad, descripcion;
     TextView textDate,fechafinText,horainicioText,horafinText;
+    Boolean available = false;
+    String fechaInicio, fechafin,horaInicio,horaFin, descripcionString, tituloString;
 
 
     //static int cont = 1;
@@ -133,6 +138,21 @@ public class agregarEvento extends AppCompatActivity {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
                         fechafinText.setText(datePicker2.getHeaderText());
+                        String fechaInicio = textDate.getText().toString();
+                        String fechafin = fechafinText.getText().toString();
+                        String horaInicio = horainicioText.getText().toString();
+                        String horaFin = horafinText.getText().toString();
+
+                        if(fechaInicio.isEmpty()|| fechafin.isEmpty()|| horaInicio.isEmpty()|| horaFin.isEmpty()){
+                            available = false;
+                            return;
+                        }
+
+                        Calendar calendar2 = Calendar.getInstance();
+                        List<String> cruces = new ArrayList<>();
+                        String dayformat = "d 'de' MMMM 'de' yyyy";
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(dayformat, Locale.US);
+                        String currentDate = dateFormat.format(calendar2.getTime());
                     }
                 });
             }
@@ -192,6 +212,12 @@ public class agregarEvento extends AppCompatActivity {
 
     }
 
+
+    public void disponibilidad(View view){
+
+
+    }
+
     public void guardarEvento(View view){
         // 1. se obtiene la referencia a la db
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -200,46 +226,69 @@ public class agregarEvento extends AppCompatActivity {
         // 2. se obtienen los datos
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-          /*  EditText nombreActividad = findViewById(R.id.nombreActividad);
-            EditText descripcion = findViewById(R.id.descripcion);
-            //  EditText fechaInicio = findViewById(R.id.fechainicio);
-            //   EditText fechaFin = findViewById(R.id.fechafin);
-            EditText horaInicio = findViewById(R.id.horaInicio);
-            EditText horaFin = findViewById(R.id.horaFin);
+            tituloString = nombreActividad.getText().toString();
+            descripcionString = descripcion.getText().toString();
+            fechaInicio = textDate.getText().toString();
+            fechafin = fechafinText.getText().toString();
+            horaInicio = horainicioText.getText().toString();
+            horaFin= horafinText.getText().toString();
 
-           */
+            if(fechaInicio.equals("")|| fechafin.equals("")|| horaInicio.equals("")|| horaFin.equals("")|| nombreActividad.equals("") ||tituloString.equals("") ){
+                Toast.makeText(agregarEvento.this, "Por favor complete todos los campos", Toast.LENGTH_SHORT).show();
+            }else{
+                DateTimeFormatter fechas = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy");
+                DateTimeFormatter horas = DateTimeFormatter.ofPattern("H:M");
+                LocalDate fechainicio1 = LocalDate.parse(textDate.getText(),fechas);
+                LocalTime horainicio1 = LocalTime.parse(horainicioText.getText(),horas);
+                Log.d("msg", horainicio1.toString());
 
-            DateTimeFormatter fechas = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy");
-            DateTimeFormatter horas = DateTimeFormatter.ofPattern("HH:mm");
-            LocalDate fechainicio1 = LocalDate.parse(textDate.getText(),fechas);
-            LocalTime horainicio1 = LocalTime.parse(horainicioText.getText(),horas);
-            Log.d("msg", horainicio1.toString());
-            LocalDateTime fechaYhoraInicio = LocalDateTime.of(fechainicio1,horainicio1);
 
-            LocalDate fechafin1 = LocalDate.parse(fechafinText.getText(),fechas);
-            LocalTime horafin1 = LocalTime.parse(horafinText.getText(),horas);
-            LocalDateTime fechaYhoraFin = LocalDateTime.of(fechafin1,horafin1);
+                LocalDate fechafin1 = LocalDate.parse(fechafinText.getText(),fechas);
+                LocalTime horafin1 = LocalTime.parse(horafinText.getText(),horas);
+                LocalDateTime fechaYhoraInicio = LocalDateTime.of(fechainicio1,horainicio1);
+                LocalDateTime fechaYhoraFin = LocalDateTime.of(fechafin1,horafin1);
 
-         //   DateTimeFormatter fechas = DateTimeFormatter.ofPattern("dd/M/uuu");
-           // DateTimeFormatter horas = DateTimeFormatter.ofPattern("HH:mm");
-          //  LocalDate fechainicio1 = LocalDate.parse(fechaInicio.getText(),fechas);
-           // LocalDate fechafin1 = LocalDate.parse(fechaFin.getText(),fechas);
-          //  LocalTime horainicio1 = LocalTime.parse(horaInicio.getText(),horas);
-          //  LocalTime horafin1 = LocalTime.parse(horaFin.getText(),horas);
+                if (fechafin1.equals(fechainicio1)) {
+                    if(fechaYhoraInicio.isBefore(fechaYhoraFin)) {
+                        EventoDTO evento = new EventoDTO();
+                        evento.setTitulo(nombreActividad.getText().toString());
+                        evento.setFechaYHoraInicio(fechaYhoraInicio);
+                        evento.setFechaYHoraFin(fechaYhoraFin);
+                        evento.setDescripcion(descripcion.getText().toString());
+                        evento.setImgID("photo" + numero + ".jpg");
+                        // 3. se guardan los datos
+                        refeventos.child(currentUser.getUid()).push().setValue(evento).addOnSuccessListener(unused -> {
+                            Toast.makeText(agregarEvento.this, "Guardado correctamente", Toast.LENGTH_SHORT).show();
+                        });
+                    }else {
+                        Toast.makeText(agregarEvento.this, "Porfavor seleccione un rango de tiempo valido", Toast.LENGTH_SHORT).show();
+                    }
 
-           // LocalDateTime fechaYhoraInicio = LocalDateTime.of(fechainicio1,horainicio1);
-           // LocalDateTime fechaYhoraFin = LocalDateTime.of(fechafin1,horafin1);
 
-            EventoDTO evento = new EventoDTO();
-            evento.setTitulo(nombreActividad.getText().toString());
-            evento.setFechaYHoraInicio(fechaYhoraInicio);
-            evento.setFechaYHoraFin(fechaYhoraFin);
-            evento.setDescripcion(descripcion.getText().toString());
-            evento.setImgID("photo" + numero + ".jpg");
-            // 3. se guardan los datos
-            refeventos.child(currentUser.getUid()).push().setValue(evento).addOnSuccessListener(unused -> {
-                Toast.makeText(agregarEvento.this, "Guardado correctamente", Toast.LENGTH_SHORT).show();
-            });
+                }
+
+
+                if(fechaYhoraInicio.isBefore(fechaYhoraFin)) {
+                    EventoDTO evento = new EventoDTO();
+                    evento.setTitulo(nombreActividad.getText().toString());
+                    evento.setFechaYHoraInicio(fechaYhoraInicio);
+                    evento.setFechaYHoraFin(fechaYhoraFin);
+                    evento.setDescripcion(descripcion.getText().toString());
+                    evento.setImgID("photo" + numero + ".jpg");
+                    // 3. se guardan los datos
+                    refeventos.child(currentUser.getUid()).push().setValue(evento).addOnSuccessListener(unused -> {
+                        Toast.makeText(agregarEvento.this, "Guardado correctamente", Toast.LENGTH_SHORT).show();
+                    });
+                }else {
+                        Toast.makeText(agregarEvento.this, "Porfavor seleccione un rango de tiempo valido", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
+            }
+
+
 
             // 4. se resetean los valores
             nombreActividad.setText("");
@@ -253,7 +302,6 @@ public class agregarEvento extends AppCompatActivity {
 
 
 
-    }
 
 
     public void subirImagen(View view) {
